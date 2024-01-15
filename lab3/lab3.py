@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import json
 from datetime import datetime
 import os
-import pandas as pd
 import re
 import requests
 
@@ -156,25 +155,25 @@ class StockExample(server.App):
         if noaa_index is None:
             raise ValueError(f"Region {region_index} not found in NOAAIndex")
 
-        url = f"https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_TS_admin.php?provinceID={noaa_index}&country=UKR&yearlyTag=Weekly&type=Mean&TagCropland=land&year1=1982&year2=2023"
-        response = requests.get(url)
-        current_datetime = datetime.now()
-        formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M")
-        filename = os.path.join(save_dir, f"file_{formatted_datetime}.csv")
+        # url = f"https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_TS_admin.php?provinceID={noaa_index}&country=UKR&yearlyTag=Weekly&type=Mean&TagCropland=land&year1=1982&year2=2023"
+        # response = requests.get(url)
+        # current_datetime = datetime.now()
+        # formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M")
+        # filename = os.path.join(save_dir, f"file_{formatted_datetime}.csv")
 
-        with open(filename, 'wb') as file:
-            content = response.text
-            replacements = [("</pre></tt>", ""), ("<tt><pre>", ""), ("<br>", ""), (" VHI", "VHI"), (" SMN", "SMN"),
-                            ("year", "Year"), ("week", "Week"), ("weeklyfor", "weekly for")]
+        # with open(filename, 'wb') as file:
+        #     content = response.text
+        #     replacements = [("</pre></tt>", ""), ("<tt><pre>", ""), ("<br>", ""), (" VHI", "VHI"), (" SMN", "SMN"),
+        #                     ("year", "Year"), ("week", "Week"), ("weeklyfor", "weekly for")]
 
-            for old, new in replacements:
-                content = content.replace(old, new)
-            content = content.replace(',\n', '\n')
-            file.write(content.encode('utf-8'))
+        #     for old, new in replacements:
+        #         content = content.replace(old, new)
+        #     content = content.replace(',\n', '\n')
+        #     file.write(content.encode('utf-8'))
 
         headers = ['Year', 'Week', 'SMN', 'SMT', 'VCI', 'TCI', 'VHI']
 
-        df = pd.read_csv(filename, skiprows=1, names=headers)
+        df = pd.read_csv("1.csv", skiprows=1, names=headers)
 
         df['Year'] = df['Year'].apply(pd.to_numeric, errors='coerce')
         df['Week'] = df['Week'].apply(pd.to_numeric, errors='coerce')
@@ -223,3 +222,4 @@ class StockExample(server.App):
 
 app = StockExample()
 app.launch(port=9093)
+
