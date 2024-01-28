@@ -119,10 +119,6 @@ class StockExample(server.App):
          "key": 'figure_height',
          "action_id": "update_data"},
 
-        # {"type": 'button',
-        #  "label": 'Apply Filters',
-        #  "key": 'apply_button',
-        #  "action_id": "update_data"},    - w is w w it
     ]
 
     controls = [{"type": "hidden",

@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import requests
 
-# Dictionary for changing regioun indexes used on website to NOAA indexes
+# Dictionary for changing region indexes used on website to NOAA indexes
 NOAAIndex = {
         1:24,
         2:25,
@@ -34,7 +34,7 @@ NOAAIndex = {
         27:20 # for Sevastopol
 }
 
-save_dir = "files"  # Directory where files will be stored
+save_dir = "files"  
 
 # Create the directory if it doesn't exist
 if not os.path.exists(save_dir):
@@ -81,9 +81,6 @@ def download_data(region_index, save_dir):
 
 desired_region_index = 1  # Desired region index
 
-#for i in range(1,28):
-    #download_data(i,save_dir)
-
 downloaded_filename = download_data(desired_region_index, save_dir)
 
 headers = ['Year', 'Week', 'SMN', 'SMT', 'VCI', 'TCI', 'VHI']
@@ -110,4 +107,4 @@ def moderate_drought():  # Get info about moderate droughts for the entire time
 
 print(moderate_drought())
 
-clear_dir('files')
+#clear_dir('files')
