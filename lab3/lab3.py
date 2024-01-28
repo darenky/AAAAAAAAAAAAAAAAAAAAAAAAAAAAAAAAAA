@@ -1,13 +1,13 @@
 from spyre import server
 import pandas as pd
 import matplotlib.pyplot as plt
-import json
 from datetime import datetime
 import os
-import re
 import requests
 
 save_dir = "files"
+if not os.path.exists(save_dir):
+    os.makedirs(save_dir)
 
 NOAAIndex = {
     1: 24,
@@ -150,6 +150,8 @@ class StockExample(server.App):
         noaa_index = NOAAIndex.get(int(region_index))
         if noaa_index is None:
             raise ValueError(f"Region {region_index} not found in NOAAIndex")
+        
+        ### For the first run uncomment next code (to download file)
 
         # url = f"https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_TS_admin.php?provinceID={noaa_index}&country=UKR&yearlyTag=Weekly&type=Mean&TagCropland=land&year1=1982&year2=2023"
         # response = requests.get(url)
@@ -209,9 +211,8 @@ class StockExample(server.App):
 
         plt.xticks(rotation=45, ha='right')
 
-        # Set x-axis ticks to display every 52-th week
-        #x_ticks = df_copy['Week'][::52]
-        #plt.xticks(x_ticks)
+        x_ticks = df_copy['Week'][::52]
+        plt.xticks(x_ticks)
 
         return fig
 
